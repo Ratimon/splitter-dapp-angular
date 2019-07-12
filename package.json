@@ -10,7 +10,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "deploy-rinkeby": "truffle migrate --compile-all --reset --network rinkeby",
-    "deploy-ropsten": "truffle migrate --compile-all --reset --network ropsten"
+    "deploy-ropsten": "truffle migrate --compile-all --reset --network ropsten",
+    "console-rinkeby" : "truffle console --network rinkeby"
   },
   "private": true,
   "dependencies": {
