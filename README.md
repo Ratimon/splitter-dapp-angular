@@ -53,3 +53,14 @@ module.exports = function(deployer) {
   // Use deployer to state migration tasks.
   deployer.deploy(Splitter);
 };
+
+Then deploy it
+
+`ng add @angular/material`
+`npm install @angular/flex-layout --save`
+`npm install @ngrx/{store,effects,router-store,entity,store-devtools} ngrx-store-freeze --save`
+
+`ng add @ngrx/store`
+
+
+ng g guard guards/EthInit
