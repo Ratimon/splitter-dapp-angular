@@ -5,9 +5,9 @@ import { NgModule } from '@angular/core';
 import { MaterialModule } from '../shared/material';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './containers/app/app.component';
 
 // components
+import { AppComponent } from './containers/app/app.component';
 import * as fromComponents from './components';
 
 // services

@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 
 
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { of, from, EMPTY as empty, Observable } from 'rxjs';
+import { of, from, EMPTY as empty} from 'rxjs';
 import { exhaustMap, switchMap, map, tap, catchError } from 'rxjs/operators';
 
 import { MetamaskWeb3Provider } from '../../services/tokens/web3-token';
@@ -55,17 +55,20 @@ export class Web3ProviderEffects {
   showAccountInfo$ = createEffect(() => this.actions$.pipe(
       ofType(Web3ProviderActions.initSuccess),
       switchMap(() => {
-        return [Web3ProviderActions.getAccount(), Web3ProviderActions.getBalance()]
+        return [
+          Web3ProviderActions.getAddress(),
+          Web3ProviderActions.getBalance()
+        ]
 
       })
     )
   );
 
   getAccount$ = createEffect(() => this.actions$.pipe(
-      ofType(Web3ProviderActions.getAccount),
+      ofType(Web3ProviderActions.getAddress),
       switchMap(() =>
         this.web3ProviderService.getAccount().pipe(
-          map((address: string) => Web3ProviderActions.accountSuccess({ address })),
+          map((address: string) => Web3ProviderActions.addressSuccess({ address })),
           catchError((err: Error) =>
             of(ErrorActions.errorMessage({ errorMsg: err.message }))
           )
@@ -87,6 +90,20 @@ export class Web3ProviderEffects {
           )
         )
       )
+    )
+  );
+
+  showSpinner$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(Web3ProviderActions.init),
+      map(() => SpinnerActions.show())
+    )
+  );
+
+  hideSpinner$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(Web3ProviderActions.initSuccess),
+      map(() => SpinnerActions.hide())
     )
   );
 

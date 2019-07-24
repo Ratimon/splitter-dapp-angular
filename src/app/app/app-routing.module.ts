@@ -14,7 +14,8 @@ const routes: Routes = [
     {
       path: 'splitter',
       // here we use the TypeScript Dynamic Imports in Angular 8
-      loadChildren: () => import('../splitter/splitter-routing.module').then(mod => mod.SplitterRoutingModule),
+      // loadChildren: () => import('../splitter/splitter-routing.module').then(mod => mod.SplitterRoutingModule),
+      loadChildren: () => import('../splitter/splitter.module').then(mod => mod.SplitterModule),
       canActivate: [guards.EthInitGuard],
     },
     { path: '**', component: fromComponents.NotFoundComponent },

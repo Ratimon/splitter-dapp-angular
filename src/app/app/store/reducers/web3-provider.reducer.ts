@@ -3,13 +3,13 @@ import { Web3ProviderActions } from '../actions';
 
 export interface Web3ProviderState {
   metamaskEnable: boolean;
-  account: string;
+  address: string;
   balance: string;
 }
 
 const initialState: Web3ProviderState = {
   metamaskEnable: false,
-  account: null,
+  address: null,
   balance: null
 };
 
@@ -19,9 +19,9 @@ export const reducer = createReducer(
     ...state,
     metamaskEnable: true
   })),
-  on(Web3ProviderActions.accountSuccess, (state, { address }) => ({
+  on(Web3ProviderActions.addressSuccess, (state, { address }) => ({
     ...state,
-    account: address
+    address: address
   })),
   on(Web3ProviderActions.balanceSuccess, (state, { balance }) => ({
     ...state,
@@ -31,5 +31,5 @@ export const reducer = createReducer(
 
 export const getMetaMaskEnable = (state: Web3ProviderState) =>
   state.metamaskEnable;
-export const getAccount = (state: Web3ProviderState) => state.account;
+export const getAddress = (state: Web3ProviderState) => state.address;
 export const getBalance = (state: Web3ProviderState) => state.balance;

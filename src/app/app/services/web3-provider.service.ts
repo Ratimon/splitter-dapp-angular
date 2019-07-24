@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 // import Web3 from 'web3';
 // import SplitterArtifact from '../../../build/contracts/Splitter.json';
 
-
 import { Provider } from './tokens/web3-token';
 import { ethers, Signer } from 'ethers';
 

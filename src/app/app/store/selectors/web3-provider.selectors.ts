@@ -16,9 +16,9 @@ export const getMetaMaskEnable = createSelector(
     fromWeb3Provider.getMetaMaskEnable
 );
 
-export const getAccount = createSelector(
+export const getAddress = createSelector(
     getWeb3ProviderState,
-    fromWeb3Provider.getAccount
+    fromWeb3Provider.getAddress
 );
 
 export const getBalance = createSelector(
