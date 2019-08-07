@@ -1,23 +1,20 @@
 <mat-expansion-panel>
   <mat-expansion-panel-header>
     <mat-panel-title>
-      Split
+      Withdraw
     </mat-panel-title>
     <mat-panel-description>
       Click to Process
     </mat-panel-description>
   </mat-expansion-panel-header>
 
-  <mat-form-field>
-    <input matInput placeholder="First Address">
-  </mat-form-field>
+  <p>Withdraw all money back to my wallet</p>
 
-  <mat-form-field>
-    <input matInput placeholder="Second Address">
-  </mat-form-field>
-
-  <mat-form-field>
-      <input matInput placeholder="Value to Send">
-  </mat-form-field>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="withdrawValue()">
+    Withdraw
+  </button>
 
 </mat-expansion-panel>

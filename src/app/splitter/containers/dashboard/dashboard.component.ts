@@ -2,12 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable , of } from 'rxjs';
 
-import { ethers } from 'ethers';
-
-
 import * as fromRoot from '../../../app/store';
-
-// import {Balance} from '../../models/balance.model'
+import * as fromSplitter from '../../../splitter/store';
 
 @Component({
   selector: 'dashboard',
@@ -26,6 +22,27 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.address$ = this.store.select(fromRoot.getAddress);
     this.ethbalance$ = this.store.select(fromRoot.getBalance);
+  }
+
+  onSplit(event) {
+    let {firstRecipient, secondRecipient, amount} = event;
+
+    this.store.dispatch(fromSplitter.BalancesActions.split({
+      bob: firstRecipient,
+      carol: secondRecipient,
+      amount
+    }));
+  }
+
+  onWithdraw(event) {
+    this.store.dispatch(fromSplitter.BalancesActions.withdraw());
+  }
+
+  onAdd(event) {
+    let {address} = event;
+    this.store.dispatch(fromSplitter.BalancesActions.loadBalance({
+      address
+    }));
   }
 
 }

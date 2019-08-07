@@ -1,45 +1,36 @@
 <mat-accordion>
 
+
   <account-display
     *ngIf="address$ | async as address"
     [title]="'Your Address'"
     [detail]="address">
+
   </account-display>
 
   <account-display
     *ngIf="ethbalance$ | async as ethbalance"
     [title]="'Your Balance'"
     [detail]="ethbalance">
+
   </account-display>
 
-  <withdraw-form>
-    
+  <split-form
+    (split)="onSplit($event)">
+
+  </split-form>
+
+  <withdraw-form
+    (withdraw)="onWithdraw($event)">
+
   </withdraw-form>
 
+  <balances-display
+    [title]="'Balances State'"
+    [detail]="'List'"
+    (add)="onAdd($event)">
 
+  </balances-display>
 
-  <!-- <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Split
-        </mat-panel-title>
-        <mat-panel-description>
-          Click to Process
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-  
-      <mat-form-field>
-        <input matInput placeholder="First Address">
-      </mat-form-field>
-  
-      <mat-form-field>
-        <input matInput placeholder="Second Address">
-      </mat-form-field>
-
-      <mat-form-field>
-          <input matInput placeholder="Value to Send">
-      </mat-form-field>
-
-  </mat-expansion-panel> -->
 
 </mat-accordion>

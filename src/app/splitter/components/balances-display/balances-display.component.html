@@ -1,0 +1,54 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{title}}
+    </mat-panel-title>
+    <mat-panel-description>
+      Access the state's balances by adding their addresses
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <form [formGroup]="form">
+
+    <mat-form-field>
+        
+        <input
+          matInput
+          placeholder="Enter the Recipient's first address"
+          [type]="hide ? 'password' : 'text'"
+          formControlName="address"
+          class="recipient-form__input"
+          [class.error]="addressControlInvalid">
+
+        <mat-icon matSuffix
+          (click)="hide = !hide">
+          {{hide ? 'visibility_off' : 'visibility'}}
+        </mat-icon>
+
+        <div
+          class="recipient-form__error"
+          *ngIf="addressControlInvalid">
+          <p>You must have an address to split money</p>
+        </div>
+
+        <div
+          class="recipient-form__error"
+          *ngIf="addressControlLengthInvalid">
+          <p>The address is invalid</p>
+        </div>
+
+    </mat-form-field>
+
+
+
+<button
+  mat-raised-button
+  color="primary"
+  [disabled]="form.invalid"
+  (click)="addAddress()">
+  Add Address
+</button>
+
+</form>
+
+</mat-expansion-panel>

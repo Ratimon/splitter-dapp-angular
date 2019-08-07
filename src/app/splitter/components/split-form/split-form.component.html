@@ -1,3 +1,107 @@
-<p>
-  split-form works!
-</p>
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Split
+    </mat-panel-title>
+    <mat-panel-description>
+      Click to Process
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+
+  <form [formGroup]="form">
+
+          <mat-form-field>
+              
+              <input
+                matInput
+                placeholder="Enter the Recipient's first address"
+                [type]="hide ? 'password' : 'text'"
+                formControlName="firstRecipient"
+                class="recipient-form__input"
+                [class.error]="firstRecipientControlInvalid">
+
+              <mat-icon matSuffix
+                (click)="hide = !hide">
+                {{hide ? 'visibility_off' : 'visibility'}}
+              </mat-icon>
+
+              <div
+                class="recipient-form__error"
+                *ngIf="firstRecipientControlInvalid">
+                <p>You must have an address to split money</p>
+              </div>
+
+              <div
+                class="recipient-form__error"
+                *ngIf="firstRecipientControlLengthInvalid">
+                <p>The address is invalid</p>
+              </div>
+
+          </mat-form-field>
+
+          <mat-form-field>
+              
+            <input
+              matInput
+              placeholder="Enter the Recipient's second address"
+              [type]="hide ? 'password' : 'text'"
+              formControlName="secondRecipient"
+              class="recipient-form__input"
+              [class.error]="secondRecipientControlInvalid"
+              [class.error]="secondRecipientControlLengthInvalid">
+
+            <mat-icon matSuffix
+              (click)="hide = !hide">
+              {{hide ? 'visibility_off' : 'visibility'}}
+            </mat-icon>
+
+            <div
+              class="recipient-form__error"
+              *ngIf="secondRecipientControlInvalid">
+              <p>You must have an address to split money</p>
+            </div>
+
+            <div
+              class="recipient-form__error"
+              *ngIf="secondRecipientControlLengthInvalid">
+              <p>The address is invalid</p>
+            </div>
+
+        </mat-form-field>
+
+          <mat-form-field>
+              <input
+                matInput
+                placeholder="Amount"
+                type="number"
+                formControlName="amount"
+                class="amount-right-align">
+              <span matPrefix>$&nbsp;</span>
+
+              <div
+                class="amount-form__error"
+                *ngIf="amountControlInvalid">
+                <p>You must enter the amount</p>
+              </div>
+
+              <div
+                class="amount-form__error"
+                *ngIf="amountControlMinInvalid">
+                <p>The amount must not be negative</p>
+              </div>
+
+          </mat-form-field>
+
+
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="form.invalid"
+        (click)="splitValue()">
+        Split
+      </button>
+
+  </form>
+
+</mat-expansion-panel>

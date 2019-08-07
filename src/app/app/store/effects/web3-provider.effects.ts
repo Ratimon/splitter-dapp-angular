@@ -7,6 +7,7 @@ import { exhaustMap, switchMap, map, tap, catchError } from 'rxjs/operators';
 
 import { MetamaskWeb3Provider } from '../../services/tokens/web3-token';
 import { Web3ProviderService } from '../../services/web3-provider.service';
+
 import { Web3ProviderActions, SpinnerActions, ErrorActions } from '../actions';
 
 @Injectable()
@@ -107,6 +108,4 @@ export class Web3ProviderEffects {
     )
   );
 
-
-  
 }

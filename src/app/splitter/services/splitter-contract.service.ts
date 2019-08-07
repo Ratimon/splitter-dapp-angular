@@ -5,20 +5,27 @@ import { Observable, from, of } from 'rxjs';
 import { map, tap, switchMap } from 'rxjs/operators';
 import { utils } from 'ethers';
 
-// @Injectable(
-//   {providedIn: SplitterModule}
-// )
-@Injectable()  
+// import {SplitterDependencyModule} from '../splitter.dependency.module'
+import { Balance } from '../models/balance.model'
+
+@Injectable(
+  // {providedIn: SplitterDependencyModule}
+)
+// @Injectable()  
 export class SplitterContractService {
 
   constructor(private contractToken: SplitterContractToken) { }
 
-  split( bob :string, carol: string, amount: number) : Observable<string> {
+  getBalance(address)  {
+    let balances = this.contractToken.balances(address);
+    return from(balances);
+  }
 
+  split( bob :string, carol: string, amount: number) : Observable<any> {
 
     let overrides = {
       // The maximum units of gas for the transaction to use
-      gasLimit: 23000,
+      gasLimit: 100000,
       // The price (in wei) per unit of gas
       gasPrice: utils.parseUnits('9.0', 'gwei'),
       // The nonce to use in the transaction
@@ -39,17 +46,74 @@ export class SplitterContractService {
         console.log('Hash:',tx.hash);
 
         return from(tx.wait()).pipe(
+
           tap((txReceipt: any) => console.log('TransactionReceipt: ', txReceipt)),
-          
+          map((txReceipt) => {
+
+            let txEvent =  txReceipt.events.pop()
+            let bobAddress = txEvent.args['bob']
+            let carolAddress = txEvent.args['carol']
+
+            console.log(this.getBalance(bobAddress));
+
+            let balances : Balance[] = [
+              {
+                address: bobAddress,
+                amount: this.getBalance(bobAddress)
+              },
+              {
+                address: carolAddress,
+                amount: this.getBalance(carolAddress)
+              },              
+            ]
+            return balances;
+            // const result = {
+            //   receipt : txReceipt,
+            //   sender: txEvent.args['sender'],
+            //   bob: txEvent.args['bob'],
+            //   carol: txEvent.args['carol'],
+            //   amount: txEvent.args['amount']
+            // }
+            // return result;
+            // return txEvent
+          }),
         )
-      } ),
-
+      }),
     );
-
   }
 
-  withdraw(){
-    
+  withdraw() : Observable<any>{
+    let overrides = {
+      // The maximum units of gas for the transaction to use
+      gasLimit: 23000,
+      // The price (in wei) per unit of gas
+      chainId: 4
+    };
+
+    let tx = this.contractToken.withdraw(overrides);
+    return from(tx).pipe(
+      switchMap( (tx: any)=>{
+
+        console.log('Transaction', tx);
+        console.log('Hash:',tx.hash);
+
+        return from(tx.wait()).pipe(
+          tap((txReceipt: any) => console.log('TransactionReceipt: ', txReceipt)),
+          map((txReceipt) => {
+
+            let txEvent =  txReceipt.events.pop()
+            let address = txEvent.args['who']
+            let amount = txEvent.args['amount']
+            let balance: Balance 
+              {
+                address
+                amount
+              }
+            return balance;
+          }),          
+        )
+      }),
+    );
   }
 
   // async split(amount: number, bob :string, carol: string) {

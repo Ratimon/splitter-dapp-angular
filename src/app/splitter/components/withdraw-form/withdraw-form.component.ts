@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  OnInit,
+  EventEmitter,
+  ChangeDetectionStrategy
+ } from '@angular/core';
 
 @Component({
   selector: 'withdraw-form',
@@ -7,9 +14,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WithdrawFormComponent implements OnInit {
 
+  @Output() withdraw = new EventEmitter<Object>();
+
   constructor() { }
 
   ngOnInit() {
   }
+
+  withdrawValue(){
+    this.withdraw.emit(null);
+  }
+  
 
 }
